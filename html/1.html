@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日彩蛋 - 特别惊喜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%);
+            font-family: 'Microsoft YaHei', 'PingFang SC', Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* 气球背景 */
+        .balloon {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 1px;
+            height: 40px;
+            background: #666;
+            transform: translateX(-50%);
+        }
+
+        .balloon:nth-child(1) {
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .balloon:nth-child(2) {
+            background: linear-gradient(45deg, #87CEEB, #B0E0E6);
+            top: 15%;
+            left: 15%;
+            animation-delay: -1s;
+        }
+
+        .balloon:nth-child(3) {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            top: 20%;
+            left: 85%;
+            animation-delay: -2s;
+        }
+
+        .balloon:nth-child(4) {
+            background: linear-gradient(45deg, #FF6347, #FF4500);
+            top: 30%;
+            right: 10%;
+            animation-delay: -3s;
+        }
+
+        .balloon:nth-child(5) {
+            background: linear-gradient(45deg, #98FB98, #90EE90);
+            bottom: 20%;
+            left: 8%;
+            animation-delay: -4s;
+        }
+
+        .balloon:nth-child(6) {
+            background: linear-gradient(45deg, #DDA0DD, #DA70D6);
+            bottom: 25%;
+            right: 5%;
+            animation-delay: -5s;
+        }
+
+        .balloon:nth-child(7) {
+            background: linear-gradient(45deg, #FFB6C1, #FF69B4);
+            top: 5%;
+            left: 70%;
+            animation-delay: -1.5s;
+        }
+
+        .balloon:nth-child(8) {
+            background: linear-gradient(45deg, #20B2AA, #48D1CC);
+            bottom: 10%;
+            left: 70%;
+            animation-delay: -2.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(1deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-1deg); }
+        }
+
+        /* 浮现图片样式 - 放大尺寸 */
+        .floating-images {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-image {
+            position: absolute;
+            width: 200px;  /* 从120px增大到200px */
+            height: 200px; /* 从120px增大到200px */
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            animation: floatImage 15s linear forwards;
+            object-fit: cover;
+        }
+
+        @keyframes floatImage {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-220px) rotate(360deg) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* 主容器 */
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 600px;
+        }
+
+        .surprise-title {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #FF69B4;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #FF69B4;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .main-message {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #FF69B4;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+            animation: pulse 2s infinite;
+        }
+
+        .blessing-text {
+            font-size: 1.4rem;
+            color: #FF69B4;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .gift-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            margin: 2rem auto;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: shake 3s infinite;
+            z-index: 20;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+
+        .gift-box::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 90px;
+            background: #FFD700;
+            border-radius: 8px;
+        }
+
+        .gift-box::after {
+            content: '';
+            position: absolute;
+            top: 32px;
+            left: -5px;
+            width: 90px;
+            height: 15px;
+            background: #FFD700;
+            border-radius: 8px;
+        }
+
+        .gift-container {
+            padding: 30px;
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+            z-index: 20;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            margin-top: 2rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #FF69B4;
+            border-radius: 50%;
+            animation: particle-float 8s linear infinite;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fff, transparent);
+            border-radius: 50%;
+            animation: explode 1.5s infinite;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(25);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+                margin: 0 20px;
+            }
+            .surprise-title {
+                font-size: 2.5rem;
+            }
+            .main-message {
+                font-size: 4rem;
+            }
+            .subtitle {
+                font-size: 1.4rem;
+            }
+            .blessing-text {
+                font-size: 1.2rem;
+            }
+            .floating-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 气球背景 -->
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+
+    <!-- 浮现图片容器 -->
+    <div class="floating-images" id="floatingImages"></div>
+
+    <div class="floating-particles" id="particles"></div>
+    <div class="fireworks" id="fireworks"></div>
+    
+    <div class="container">
+        <h1 class="surprise-title">×××××××××</h1>
+        <div class="subtitle">×××××××××</div>
+        <div class="subtitle">××××××××</div>
+        
+        <div class="main-message">××××××××</div>
+        
+        <div class="blessing-text">
+            生日快乐呀，愿你健健康康，天天开心<br>
+            每一天都活力满满！
+        </div>
+        
+        <div class="gift-container" onclick="goToEasterEgg()">
+            <div class="gift-box"></div>
+        </div>
+        
+        <div style="margin-top: 1rem; color: #FF69B4; font-weight: 500;">
+            点击"礼物盒"获得更多惊喜！
+        </div>
+        
+        <a href="javascript:history.back()" class="back-btn">返回主页</a>
+    </div>
+
+    <!-- 音频元素 -->
+    <audio id="backgroundMusic" loop>
+        <source src="../music/飞鸟与蝉.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let imageAnimationStarted = false;
+        let totalImagesShown = 0;
+        const maxImages = 10;
+        let imageInterval;
+        let audioElement;
+        let currentImageIndex = 0;
+
+        // 初始化音频
+        function initializeAudio() {
+            audioElement = document.getElementById('backgroundMusic');
+            
+            // 从URL参数获取音频时间（如果从Memories.html跳转过来）
+            const urlParams = new URLSearchParams(window.location.search);
+            const audioTime = urlParams.get('audioTime');
+            
+            // 优先使用URL参数中的时间，其次使用sessionStorage中保存的时间
+            if (audioTime) {
+                // 设置音频时间并确保无缝衔接
+                audioElement.currentTime = parseFloat(audioTime);
+                // 立即播放以实现无缝衔接
+                audioElement.play();
+            } else {
+                const savedTime = sessionStorage.getItem('audioCurrentTime');
+                if (savedTime) {
+                    audioElement.currentTime = parseFloat(savedTime);
+                }
+                
+                // 如果不是从Memories.html跳转过来，则需要用户交互才能播放
+                audioElement.play().catch(error => {
+                    console.log('自动播放失败，需要用户交互:', error);
+                    // 添加点击事件监听器，在用户首次交互时播放音频
+                    document.addEventListener('click', function playOnFirstClick() {
+                        audioElement.play();
+                        document.removeEventListener('click', playOnFirstClick);
+                    }, { once: true });
+                });
+            }
+            
+            // 定期保存播放时间
+            setInterval(() => {
+                if (audioElement && !audioElement.paused) {
+                    sessionStorage.setItem('audioCurrentTime', audioElement.currentTime);
+                }
+            }, 1000);
+        }
+
+        // 创建浮现图片效果 - 修改为循环显示
+        function createFloatingImages() {
+            if (imageAnimationStarted) return;
+            
+            imageAnimationStarted = true;
+            const imagesContainer = document.getElementById('floatingImages');
+            
+            // 立即显示第一张图片
+            showNextImage();
+            
+            // 每2秒显示一张新图片，循环显示
+            imageInterval = setInterval(() => {
+                showNextImage();
+            }, 2000);
+        }
+
+        function showNextImage() {
+            const imagesContainer = document.getElementById('floatingImages');
+            currentImageIndex = (currentImageIndex % maxImages) + 1;
+            
+            const image = document.createElement('img');
+            image.className = 'floating-image';
+            image.src = `../img/流图${currentImageIndex}.jpg`;
+            image.style.left = Math.random() * (window.innerWidth - 200) + 'px';
+            
+            // 每张图片都有独特的动画延迟
+            const animationDelay = Math.random() * 0.5 + 's';
+            image.style.animationDelay = animationDelay;
+            
+            // 添加随机的初始旋转
+            const randomRotation = Math.random() * 360;
+            image.style.transform = `rotate(${randomRotation}deg)`;
+            
+            // 添加错误处理
+            image.onerror = function() {
+                console.log(`图片 流图${currentImageIndex}.jpg 加载失败`);
+                this.style.display = 'none';
+            };
+            
+            imagesContainer.appendChild(image);
+            
+            // 动画结束后移除图片
+            setTimeout(() => {
+                if (image.parentNode) {
+                    image.remove();
+                }
+            }, 15000);
+        }
+
+        // 创建飘落的粒子效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                particle.style.background = `hsl(${Math.random() * 60 + 300}, 70%, 60%)`;
+                particlesContainer.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 8000);
+            }, 300);
+        }
+
+        // 创建烟花效果
+        function createFireworks() {
+            const fireworksContainer = document.getElementById('fireworks');
+            
+            for (let i = 0; i < 30; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = Math.random() * 100 + '%';
+                firework.style.top = Math.random() * 100 + '%';
+                firework.style.background = `hsl(${Math.random() * 60 + 300}, 70%, 60%)`;
+                firework.style.animationDelay = Math.random() * 0.5 + 's';
+                fireworksContainer.appendChild(firework);
+                
+                setTimeout(() => {
+                    firework.remove();
+                }, 1500);
+            }
+            
+            playBirthdaySong();
+        }
+
+        function goToEasterEgg(){
+            createFireworks();
+            
+            // 开始图片浮现动画
+            setTimeout(() => {
+                createFloatingImages();
+            }, 1000);
+            
+            // 20秒后跳转到彩蛋页面
+            setTimeout(() => {
+                // 清理定时器
+                if (imageInterval) {
+                    clearInterval(imageInterval);
+                }
+                window.location.href='../html/彩蛋.html';
+            }, 20000);
+        }
+
+        // 播放生日音效
+        function playBirthdaySong() {
+            if ('AudioContext' in window || 'webkitAudioContext' in window) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const audioCtx = new AudioContext();
+                
+                const notes = [261.63, 261.63, 293.66, 261.63, 349.23, 329.63, 261.63, 261.63, 293.66, 261.63, 392.00, 349.23];
+                
+                notes.forEach((freq, index) => {
+                    setTimeout(() => {
+                        const oscillator = audioCtx.createOscillator();
+                        const gainNode = audioCtx.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioCtx.destination);
+                        
+                        oscillator.frequency.value = freq;
+                        oscillator.type = 'sine';
+                        
+                        gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                        
+                        oscillator.start(audioCtx.currentTime);
+                        oscillator.stop(audioCtx.currentTime + 0.4);
+                    }, index * 400);
+                });
+            }
+        }
+
+        // 页面加载完成后开始动画
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAudio();
+            createParticles();
+            
+            // 添加点击创建小烟花效果
+            document.addEventListener('click', function(e) {
+                // 检查是否点击了礼物盒或其容器
+                if (e.target.closest('.gift-container') || e.target.closest('.gift-box')) {
+                    return;
+                }
+                
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = e.clientX + 'px';
+                firework.style.top = e.clientY + 'px';
+                firework.style.background = `hsl(${Math.random() * 60 + 300}, 70%, 60%)`;
+                firework.style.position = 'fixed';
+                document.getElementById('fireworks').appendChild(firework);
+                
+                setTimeout(() => {
+                    firework.remove();
+                }, 1500);
+            });
+            
+            // 处理页面可见性变化
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    if (audioElement && !audioElement.paused) {
+                        sessionStorage.setItem('audioCurrentTime', audioElement.currentTime);
+                    }
+                } else {
+                    if (audioElement) {
+                        const savedTime = sessionStorage.getItem('audioCurrentTime');
+                        if (savedTime) {
+                            audioElement.currentTime = parseFloat(savedTime);
+                        }
+                        audioElement.play().catch(error => {
+                            console.log('恢复播放失败:', error);
+                        });
+                    }
+                }
+            });
+        });
+
+        // 页面卸载时保存音频时间
+        window.addEventListener('beforeunload', function() {
+            if (audioElement && !audioElement.paused) {
+                sessionStorage.setItem('audioCurrentTime', audioElement.currentTime);
+            }
+        });
+    </script>
+</body>
+</html>
