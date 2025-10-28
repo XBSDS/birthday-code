@@ -42,7 +42,7 @@
 <img width="896" height="304" alt="image" src="https://github.com/user-attachments/assets/927fcd56-3a03-439a-a060-05a4ac549791" />
 
 （3）音乐修改（修改代码的文件均位于html文件夹下）
-*前提：记得在music文件夹中下载自己喜欢音乐才方便后面的调用*
+*前提：记得在music文件夹中下载自己喜欢音乐才方便后面的调用，之后按照文件路径修改图中代码即可*
 <1>index1.html（登录页面的播放音乐）
 <img width="1049" height="197" alt="image" src="https://github.com/user-attachments/assets/7f00e223-fd3b-4501-ad0e-b94369f94740" />
 
